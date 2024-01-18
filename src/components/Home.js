@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 function Home() {
-    const [data, setData] = useState("");
+    const [text, setText] = useState("");
     const [selectedID, setSelectedID] = useState("");
+    const [file, setFile] = useState("");
 
     const checkInputs = () => {
-        if(data !== "" && selectedID !== ""){
+        if((file !== "" || text !== "") && selectedID !== ""){
             submitPressed();
         }
         else{
@@ -16,8 +17,9 @@ function Home() {
     const submitPressed = () => {
         console.log("ran");
         
-        setData("");
+        setText("");
         setSelectedID("");
+        setFile("")
     }
 
     return (
@@ -30,8 +32,13 @@ function Home() {
                             <input value={selectedID} type="text" className="form-control" onChange={(event)=>setSelectedID(event.target.value)}/>
                         </div>
                         <div className="data-area">
-                            <textarea className="form-control mb-5 mt-5" value={data} style={{borderColor: "black", height:"50vh", resize:"none"}} id="data" onChange={(event)=>setData(event.target.value)}></textarea>   
+                            <textarea placeholder="Type or paste information here if applicable" className="form-control mb-5 mt-5" value={text} style={{borderColor: "black", height:"50vh", resize:"none"}} id="text" onChange={(event)=>setText(event.target.value)}></textarea>   
                         </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputFile">Upload file here if applicable</label>
+                            <input onChange={(event)=>setFile(event.target.value)} value={file} type="file" class="form-control" id="inputFile"/>
+                        </div>
+
                         <div className="submit-btn">
                             <button className="btn btn-primary" type="button" onClick={checkInputs}>Submit form</button>
                         </div>
