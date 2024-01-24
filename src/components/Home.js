@@ -7,7 +7,7 @@ function Home() {
 
     const [sentData, setSentData] = useState(`${Date.now()}: This is the data`);
 
-    const isLoggedIn = true;
+    const isLoggedIn = false;
     const userID = 12345;
 
     const checkInputs = () => {
@@ -21,7 +21,19 @@ function Home() {
 
     
     const submitPressed = () => {
-        console.log("ran");
+        fetch("http://localhost:8080/", 
+        {
+            mode: 'no-cors',
+            method: "POST",
+            body: JSON.stringify({
+                timestamp: Date.now(),
+                selectedID: selectedID,
+                data: text
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
         
         setText("");
         setSelectedID("");
