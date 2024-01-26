@@ -7,7 +7,7 @@ function Home() {
 
     const [sentData, setSentData] = useState(`${Date.now()}: This is the data`);
 
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     const userID = 12345;
 
     const checkInputs = () => {
@@ -18,12 +18,10 @@ function Home() {
             alert("Check to make sure the data field and the ID of the healthcare professional are both filled out.")
         }
     }
-
     
     const submitPressed = () => {
-        fetch("http://localhost:8080/", 
+        fetch("http://localhost:8080/patientData", 
         {
-            mode: 'no-cors',
             method: "POST",
             body: JSON.stringify({
                 timestamp: Date.now(),
@@ -31,9 +29,29 @@ function Home() {
                 data: text
             }),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-Type": "application/json"
             }
         })
+            .then((response)=> response.json())
+            .then((data) => console.log(data))
+        
+        setText("");
+        setSelectedID("");
+        setFile("")
+    }
+    const refreshPressed = () => {
+        fetch("http://localhost:8080/doctorData", 
+        {
+            method: "POST",
+            body: JSON.stringify({
+                ID: userID,
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then((response)=> response.json())
+            .then((data) => setSentData((`${data.Timestamp}: ${data.Data}`)))
         
         setText("");
         setSelectedID("");
@@ -74,6 +92,9 @@ function Home() {
                     <h1 className="fs-1 mt-3">Your ID: {userID}</h1>
                     <div className="data-area">
                         <textarea readOnly placeholder="Data will appear here when shared" className="form-control mb-5 mt-5" value={sentData} style={{borderColor: "black", height:"50vh", resize:"none"}} id="sent-data"></textarea>   
+                    </div>
+                    <div className="submit-btn">
+                        <button className="btn btn-primary" type="button" onClick={refreshPressed}>Refresh</button>
                     </div>
                 </div>
             </>
