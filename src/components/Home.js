@@ -24,8 +24,7 @@ function Home() {
         {
             method: "POST",
             body: JSON.stringify({
-                timestamp: Date.now(),
-                selectedID: selectedID,
+                selectedID: parseInt(selectedID),
                 data: text,
             }),
             headers: {
