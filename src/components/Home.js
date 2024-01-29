@@ -7,7 +7,7 @@ function Home() {
 
     const [sentData, setSentData] = useState(`${Date.now()}: This is the data`);
 
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     const userID = 12345;
 
     const checkInputs = () => {
@@ -48,7 +48,7 @@ function Home() {
             }
         })
             .then((response)=> response.json())
-            .then((data) => setSentData((`${data.Timestamp}: ${data.Data}`)))
+            .then((data) => setSentData((`${data.timestamp}: ${data.data}`)))
         
         setText("");
         setSelectedID("");
