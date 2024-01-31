@@ -24,16 +24,13 @@ function Home() {
         {
             method: "POST",
             body: JSON.stringify({
-                timestamp: Date.now(),
-                selectedID: selectedID,
-                data: text
+                selectedID: parseInt(selectedID),
+                data: text,
             }),
             headers: {
                 "Content-Type": "application/json"
             }
-        })
-            .then((response)=> response.json())
-            .then((data) => console.log(data))
+        });
         
         setText("");
         setSelectedID("");
@@ -51,7 +48,7 @@ function Home() {
             }
         })
             .then((response)=> response.json())
-            .then((data) => setSentData((`${data.Timestamp}: ${data.Data}`)))
+            .then((data) => setSentData((`${data.timestamp}: ${data.data}`)))
         
         setText("");
         setSelectedID("");
@@ -71,9 +68,9 @@ function Home() {
                             <div className="data-area">
                                 <textarea placeholder="Type or paste information here if applicable" className="form-control mb-5 mt-5" value={text} style={{borderColor: "black", height:"50vh", resize:"none"}} id="text" onChange={(event)=>setText(event.target.value)}></textarea>   
                             </div>
-                            <div class="input-group mb-3">
-                                <label class="input-group-text" for="inputFile">Upload file here if applicable</label>
-                                <input onChange={(event)=>setFile(event.target.value)} value={file} type="file" class="form-control" id="inputFile"/>
+                            <div className="input-group mb-3">
+                                <label className="input-group-text" htmlFor="inputFile">Upload file here if applicable</label>
+                                <input onChange={(event)=>setFile(event.target.value)} value={file} type="file" className="form-control" id="inputFile"/>
                             </div>
 
                             <div className="submit-btn">
