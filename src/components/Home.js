@@ -1,17 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 
 function Home() {
     const [text, setText] = useState("");
     const [selectedID, setSelectedID] = useState("");
-    const [file, setFile] = useState("");
-
-    const [sentData, setSentData] = useState(`${Date.now()}: This is the data`);
-
-    const isLoggedIn = true;
-    const userID = 12345;
+    const [isLoggedIn, setIsLoggedIn, userID, setUserID] = useOutletContext();
+    const [sentData, setSentData] = useState("");
 
     const checkInputs = () => {
-        if((file !== "" || text !== "") && selectedID !== ""){
+        if((text !== "") && selectedID !== ""){
             submitPressed();
         }
         else{
@@ -34,26 +31,40 @@ function Home() {
         
         setText("");
         setSelectedID("");
-        setFile("")
     }
     const refreshPressed = () => {
         fetch("http://localhost:8080/doctorData", 
         {
             method: "POST",
             body: JSON.stringify({
-                id: userID,
+                id: parseInt(userID),
             }),
             headers: {
                 "Content-Type": "application/json"
             }
         })
             .then((response)=> response.json())
-            .then((data) => setSentData((`${data.timestamp}: ${data.data}`)))
+            .then((data)=> {
+                if(data === null){
+                    setSentData("")
+                    return
+                }
+                let dataString = ""
+                for(let i = 0; i < data.length; i++){
+                    dataString = dataString + data[i].timestamp + ": " + data[i].data + "\n" 
+                }
+                setSentData(dataString)
+            });
         
         setText("");
         setSelectedID("");
-        setFile("")
     }
+    useEffect(() => {
+        let ignore = false;
+        
+        if (!ignore)  refreshPressed()
+        return () => { ignore = true; }
+    },[]);
 
     if(!isLoggedIn){
         return (
@@ -67,10 +78,6 @@ function Home() {
                             </div>
                             <div className="data-area">
                                 <textarea placeholder="Type or paste information here if applicable" className="form-control mb-5 mt-5" value={text} style={{borderColor: "black", height:"50vh", resize:"none"}} id="text" onChange={(event)=>setText(event.target.value)}></textarea>   
-                            </div>
-                            <div className="input-group mb-3">
-                                <label className="input-group-text" htmlFor="inputFile">Upload file here if applicable</label>
-                                <input onChange={(event)=>setFile(event.target.value)} value={file} type="file" className="form-control" id="inputFile"/>
                             </div>
 
                             <div className="submit-btn">
@@ -86,7 +93,6 @@ function Home() {
         return(
             <>
                 <div className="containter-fluid text-center p-3">
-                    <h1 className="fs-1 mt-3">Your ID: {userID}</h1>
                     <div className="data-area">
                         <textarea readOnly placeholder="Data will appear here when shared" className="form-control mb-5 mt-5" value={sentData} style={{borderColor: "black", height:"50vh", resize:"none"}} id="sent-data"></textarea>   
                     </div>

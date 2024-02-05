@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { redirect } from "react-router-dom";
+import { redirect, useOutletContext } from "react-router-dom";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -7,7 +7,8 @@ const Login = () => {
     const [newUsername, setNewUsername] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
-
+    const [isLoggedIn, setIsLoggedIn, userID, setUserID] = useOutletContext();
+    
     const submittedLogin = () => {
         fetch("http://localhost:8080/login", {
             method: "POST",
@@ -20,9 +21,14 @@ const Login = () => {
                 "Content-Type": "application/json"
             }
         })
-            .then((response) => response.json)
+            .then((response) => response.json())
             .then((data)=> {
-                redirect("/");
+                if(data.error){
+                    alert("Incorrect username or password");
+                } else {
+                    setUserID(data.message);
+                    setIsLoggedIn(true);
+                }
             })
     }
 
@@ -43,9 +49,9 @@ const Login = () => {
                     "Content-Type": "application/json"
                 }
             }) 
-                .then((response)=> response.json)
+                .then((response)=> response.json())
                 .then((data)=>{
-                    console.log(data.message)
+                    alert(data.message)
                 })            
         }
         else {
@@ -68,7 +74,7 @@ const Login = () => {
                             <input id="password" type="password" className="form-control" onChange={(event)=>setPassword(event.target.value)}/>
                         </div>
                         <div className="input-group mt-3 text-center">
-                            <button type="button" className="btn btn-primary" onClick={submittedLogin}>Submit</button>
+                            <button type="button" className="btn btn-primary" onClick={submittedLogin}>Login</button>
                         </div>
                     </div>
 
