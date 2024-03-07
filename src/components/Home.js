@@ -17,7 +17,7 @@ function Home() {
     }
     
     const submitPressed = () => {
-        fetch(`${process.env.BACKEND_LINK}/patientData`, 
+        fetch(`${"https://app-06324ce1-d7f5-4a40-9ba1-b2df48f32c1c.cleverapps.io"}/patientData`, 
         {
             method: "POST",
             body: JSON.stringify({
