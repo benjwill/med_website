@@ -20,7 +20,6 @@ function Home() {
         fetch(`${"https://app-06324ce1-d7f5-4a40-9ba1-b2df48f32c1c.cleverapps.io"}/patientData`, 
         {
             method: "POST",
-            mode:"cors",
             body: JSON.stringify({
                 selectedID: parseInt(selectedID),
                 data: text,
