@@ -17,7 +17,7 @@ function Home() {
     }
     
     const submitPressed = () => {
-        fetch(`${BACKEND_LINK}/patientData`, 
+        fetch(`${process.env.BACKEND_LINK}/patientData`, 
         {
             method: "POST",
             mode:"no-cors",
