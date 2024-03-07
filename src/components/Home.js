@@ -17,7 +17,7 @@ function Home() {
     }
     
     const submitPressed = () => {
-        fetch("http://localhost:8080/patientData", 
+        fetch(`${BACKEND_LINK}/patientData`, 
         {
             method: "POST",
             body: JSON.stringify({
@@ -33,7 +33,7 @@ function Home() {
         setSelectedID("");
     }
     const refreshPressed = () => {
-        fetch("http://localhost:8080/doctorData", 
+        fetch(`${BACKEND_LINK}/doctorData`, 
         {
             method: "POST",
             body: JSON.stringify({

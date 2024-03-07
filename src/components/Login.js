@@ -10,7 +10,7 @@ const Login = () => {
     const [isLoggedIn, setIsLoggedIn, userID, setUserID] = useOutletContext();
     
     const submittedLogin = () => {
-        fetch("http://localhost:8080/login", {
+        fetch(`${BACKEND_LINK}/login`, {
             method: "POST",
             body: JSON.stringify({
                 username: username,
@@ -38,7 +38,7 @@ const Login = () => {
             return
         }
         if (newPassword === confirmNewPassword){
-            fetch("http://localhost:8080/login", {
+            fetch(`${BACKEND_LINK}/login`, {
                 method: "POST",
                 body: JSON.stringify({
                     username: newUsername,
