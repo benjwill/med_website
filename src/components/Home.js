@@ -20,6 +20,7 @@ function Home() {
         fetch(`${process.env.BACKEND_LINK}/patientData`, 
         {
             method: "POST",
+            mode:"cors",
             body: JSON.stringify({
                 selectedID: parseInt(selectedID),
                 data: text,
