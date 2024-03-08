@@ -37,6 +37,7 @@ function Home() {
         fetch(`${process.env.BACKEND_LINK}/doctorData`, 
         {
             method: "POST",
+            mode:"cors",
             body: JSON.stringify({
                 id: parseInt(userID),
             }),
