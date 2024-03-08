@@ -12,6 +12,7 @@ const Login = () => {
     const submittedLogin = () => {
         fetch(`${process.env.BACKEND_LINK}/login`, {
             method: "POST",
+            mode:"cors",
             body: JSON.stringify({
                 username: username,
                 password: password,
@@ -40,6 +41,7 @@ const Login = () => {
         if (newPassword === confirmNewPassword){
             fetch(`${process.env.BACKEND_LINK}/login`, {
                 method: "POST",
+                mode:"cors",
                 body: JSON.stringify({
                     username: newUsername,
                     password: newPassword,
