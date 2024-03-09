@@ -10,7 +10,7 @@ const Login = () => {
     const [isLoggedIn, setIsLoggedIn, userID, setUserID] = useOutletContext();
     
     const submittedLogin = () => {
-        fetch(`${process.env.BACKEND_LINK}/login`, {
+        fetch(`${"https://app-06324ce1-d7f5-4a40-9ba1-b2df48f32c1c.cleverapps.io"}/login`, {
             method: "POST",
             mode:"cors",
             body: JSON.stringify({
@@ -39,7 +39,7 @@ const Login = () => {
             return
         }
         if (newPassword === confirmNewPassword){
-            fetch(`${process.env.BACKEND_LINK}/login`, {
+            fetch(`${"https://app-06324ce1-d7f5-4a40-9ba1-b2df48f32c1c.cleverapps.io"}/login`, {
                 method: "POST",
                 mode:"cors",
                 body: JSON.stringify({
